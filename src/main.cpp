@@ -6,6 +6,10 @@ std::ostream& operator<<(std::ostream& out, const Format& format) {
 	return out << "Extension: " + format.extension + " - " + format.name + '\n';
 }
 
+bool operator==(const Format& lhs, const Format& rhs) {
+	return lhs.extension == rhs.extension && lhs.format == rhs.format && lhs.name == rhs.name;
+}
+
 int main(int argc, char* argv[]) {
 	//Loading format
 	Image::loadFormats();
