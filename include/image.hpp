@@ -1,13 +1,13 @@
 #pragma once
 
 #include <string>
-#include <map>
+#include <unordered_map>
 
 #include "format.hpp"
 
 class Image {
-public:
-	static std::map<std::string, Format> Formats;
+private:
+	static std::unordered_map<std::string, Format> Formats;
 	static void loadFormats();
 
 public:
@@ -17,12 +17,15 @@ public:
 	void load(const std::string& file = "");
 	const Format& expectedFormat() const;
 	const Format& realFormat() const;
-	void setRealFormat(const Format& format);
+	const Format& nameBasedFormat() const;
+	void detectFormat();
+	const std::string& filename() const;
 
 private:
 	std::string mFile;
 	const Format UnknownFormat;
 	Format mRealFormat;
 	Format mExpectedFormat;
+	Format mNameBasedFormat;
 	std::string mContent;
 };

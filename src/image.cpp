@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-std::map<std::string, Format> Image::Formats;
+std::unordered_map<std::string, Format> Image::Formats;
 
 void Image::loadFormats() {
 	Formats["png"] = Format("png", "PNG - Portable Network Graphics");
@@ -17,7 +17,11 @@ Image::Image()
 Image::Image(const std::string& file)
 	: mFile(file), UnknownFormat("**", "Unknown Format") {
 	std::string fileExtension = mFile.substr(mFile.rfind('.')+1);
-	mExpectedFormat.extension = fileExtension;
+	mNameBasedFormat.extension = fileExtension;
+	const auto it = Formats.find(fileExtension);
+	mExpectedFormat = UnknownFormat;
+	if (it != Formats.end())
+		mExpectedFormat = it->second;
 }
 
 void Image::load(const std::string& file) {
@@ -32,6 +36,14 @@ const Format& Image::realFormat() const {
 	return mRealFormat;
 }
 
-void Image::setRealFormat(const Format& format) {
+const Format& Image::nameBasedFormat() const {
+	return mNameBasedFormat;
+}
 
+void Image::detectFormat() {
+
+}
+
+const std::string& Image::filename() const {
+	return mFile;
 }

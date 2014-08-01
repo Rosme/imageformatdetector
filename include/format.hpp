@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <ostream>
 
 struct Format {
 	Format(){}
