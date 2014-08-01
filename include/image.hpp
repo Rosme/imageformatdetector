@@ -6,7 +6,7 @@
 #include "format.hpp"
 
 class Image {
-private:
+public:
 	static std::unordered_map<std::string, Format> Formats;
 	static void loadFormats();
 
