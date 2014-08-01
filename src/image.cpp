@@ -17,7 +17,7 @@ Image::Image()
 	: Image("") {}
 
 Image::Image(const std::string& file)
-	: mFile(file), UnknownFormat("**", "Unknown Format") {
+	: mFile(file), UnknownFormat("**", "Unknown Format"), mDetector(nullptr) {
 	std::string fileExtension = mFile.substr(mFile.rfind('.')+1);
 	mNameBasedFormat.extension = fileExtension;
 	auto it = Formats.find(fileExtension);

@@ -2,8 +2,12 @@
 
 #include <string>
 #include <unordered_map>
+#include <memory>
 
 #include "format.hpp"
+
+class Detector;
+typedef std::unique_ptr<Detector> DetectorPtr;
 
 class Image {
 public:
@@ -28,4 +32,5 @@ private:
 	Format mExpectedFormat;
 	Format mNameBasedFormat;
 	std::string mContent;
+	DetectorPtr mDetector;
 };
