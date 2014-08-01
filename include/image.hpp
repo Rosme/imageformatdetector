@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <memory>
 #include <functional>
+#include <vector>
 
 #include "format.hpp"
 #include "detector.hpp"
@@ -38,12 +39,12 @@ private:
 	std::string mContent;
 	DetectorPtr mDetector;
 
-	std::unordered_map<ImageFormat, std::function<DetectorPtr()>> mFactories;
+	std::unordered_map<ImageFormat, std::function<DetectorPtr()>> mDetectors;
 };
 
 template<class T>
 void Image::registerFormat(ImageFormat format) {
-	mFactories[format] = [this]() {
+	mDetectors[format] = [this]() {
 		return DetectorPtr(new T);
 	};
 }
