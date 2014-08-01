@@ -24,6 +24,10 @@ Image::Image(const std::string& file)
 	mExpectedFormat = UnknownFormat;
 	if (it != Formats.end())
 		mExpectedFormat = it->second;
+
+	registerFormat<JPGDetector>(ImageFormat::JPG);
+	registerFormat<PNGDetector>(ImageFormat::PNG);
+	registerFormat<BMPDetector>(ImageFormat::BMP);
 }
 
 void Image::load(const std::string& file) {
@@ -31,7 +35,7 @@ void Image::load(const std::string& file) {
 	assert(ifs.is_open());
 
 	ifs.seekg(0, ifs.end);
-	std::fstream::pos_type length = ifs.tellg();
+	unsigned int length = ifs.tellg();
 	ifs.seekg(0, ifs.beg);
 
 	mContent.resize(length, ' '); //Reserving the space for the file

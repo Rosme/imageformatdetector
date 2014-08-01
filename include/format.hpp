@@ -3,6 +3,12 @@
 #include <string>
 #include <ostream>
 
+enum ImageFormat {
+	JPG,
+	PNG,
+	BMP
+};
+
 struct Format {
 	Format(){}
 	Format(const std::string& ext, const std::string& n)

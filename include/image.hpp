@@ -3,10 +3,11 @@
 #include <string>
 #include <unordered_map>
 #include <memory>
+#include <functional>
 
 #include "format.hpp"
+#include "detector.hpp"
 
-class Detector;
 typedef std::unique_ptr<Detector> DetectorPtr;
 
 class Image {
@@ -25,6 +26,9 @@ public:
 	void detectFormat();
 	const std::string& filename() const;
 
+	template<class T>
+	void registerFormat(ImageFormat format);
+
 private:
 	std::string mFile;
 	const Format UnknownFormat;
@@ -33,4 +37,13 @@ private:
 	Format mNameBasedFormat;
 	std::string mContent;
 	DetectorPtr mDetector;
+
+	std::unordered_map<ImageFormat, std::function<DetectorPtr()>> mFactories;
 };
+
+template<class T>
+void Image::registerFormat(ImageFormat format) {
+	mFactories[format] = [this]() {
+		return DetectorPtr(new T);
+	};
+}
