@@ -10,6 +10,10 @@ bool operator==(const Format& lhs, const Format& rhs) {
 	return lhs.extension == rhs.extension && lhs.format == rhs.format && lhs.name == rhs.name;
 }
 
+bool operator!=(const Format& lhs, const Format& rhs) {
+	return !(lhs == rhs);
+}
+
 int main(int argc, char* argv[]) {
 	//Loading format
 	Image::loadFormats();
