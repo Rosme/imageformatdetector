@@ -17,10 +17,10 @@ void Image::loadFormats() {
 	//JPG - JPEG
 	Formats["jpg"] = Format("jpg", "JPEG - Joint Photographic Experts Group", ImageFormat::JPG);
 	Formats["jpeg"] = Format("jpeg", "JPEG - Joint Photographic Experts Group", ImageFormat::JPG);
-	Formats["jpe"] = Format("jpeg", "JPEG - Joint Photographic Experts Group", ImageFormat::JPG);
-	Formats["jif"] = Format("jpeg", "JPEG - Joint Photographic Experts Group", ImageFormat::JPG);
-	Formats["jfif"] = Format("jpeg", "JPEG - Joint Photographic Experts Group", ImageFormat::JPG);
-	Formats["jfi"] = Format("jpeg", "JPEG - Joint Photographic Experts Group", ImageFormat::JPG);
+	Formats["jpe"] = Format("jpe", "JPEG - Joint Photographic Experts Group", ImageFormat::JPG);
+	Formats["jif"] = Format("jif", "JPEG - Joint Photographic Experts Group", ImageFormat::JPG);
+	Formats["jfif"] = Format("jfif", "JPEG - Joint Photographic Experts Group", ImageFormat::JPG);
+	Formats["jfi"] = Format("jfi", "JPEG - Joint Photographic Experts Group", ImageFormat::JPG);
 }
 
 Image::Image()
