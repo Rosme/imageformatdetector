@@ -6,6 +6,10 @@
 
 void JPGDetector::detect(const std::string& image, Format& format) {
 	std::cout << "Testing for JPG\n";
+
+	if (!format) {
+		std::cout << "Not JPG\n";
+	}
 }
 
 void PNGDetector::detect(const std::string& image, Format& format) {
@@ -19,8 +23,16 @@ void PNGDetector::detect(const std::string& image, Format& format) {
 		std::cout << "PNG 8-Byte Signature is valid. Image file is PNG.\n";
 		format = Image::Formats["png"];
 	}
+
+	if (!format) {
+		std::cout << "Not PNG\n";
+	}
 }
 
 void BMPDetector::detect(const std::string& image, Format& format) {
 	std::cout << "Testing for BMP\n";
+
+	if (!format) {
+		std::cout << "Not BMP\n";
+	}
 }

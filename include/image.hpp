@@ -32,7 +32,6 @@ public:
 
 private:
 	std::string mFile;
-	const Format UnknownFormat;
 	Format mRealFormat;
 	Format mExpectedFormat;
 	Format mNameBasedFormat;
