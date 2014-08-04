@@ -36,9 +36,9 @@ int main(int argc, char* argv[]) {
 	std::cout << img.nameBasedFormat();
 	std::cout << "\nExpected Format: \n";
 	std::cout << img.expectedFormat();
-	std::cout << "\nDetecting Real Type\n";
+	std::cout << "\nDetecting Real Type...\n\n";
 	img.detectFormat();
-	std::cout << "Real Format: \n";
+	std::cout << "\nReal Format: \n";
 	std::cout << img.realFormat();
 
 	std::cin.get();
