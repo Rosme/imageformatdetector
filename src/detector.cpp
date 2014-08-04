@@ -32,6 +32,33 @@ void PNGDetector::detect(const std::string& image, Format& format) {
 void BMPDetector::detect(const std::string& image, Format& format) {
 	std::cout << "Testing for BMP\n";
 
+	//BMP is define by a 14 Byte header
+	//The signature is a 2 byte value starting at the start of the file
+	// Default signature:
+	// 42 4D   (BM)
+	// Can be:
+	// 42 41   (BA)
+	// 43 49   (CI)
+	// 43 50   (CP)
+	// 49 43   (IC)
+	// 50 54   (PT)
+	//The 12 other bytes are useless to identifying the formats.
+	//See http://en.wikipedia.org/wiki/BMP_file_format#File_structure
+	std::vector<std::string> bmpSignatures;
+	bmpSignatures.push_back("\x42\x4d");
+	bmpSignatures.push_back("\x42\x41");
+	bmpSignatures.push_back("\x43\x49");
+	bmpSignatures.push_back("\x43\x50");
+	bmpSignatures.push_back("\x49\x43");
+	bmpSignatures.push_back("\x50\x54");
+
+	std::string signature = image.substr(0, 2);
+	const auto it = std::find(std::begin(bmpSignatures), std::end(bmpSignatures), signature);
+	if (it != std::end(bmpSignatures)) {
+		std::cout << "BMP Signature Found: " << *it << ". Image file is BMP.\n";
+		format = Image::Formats["bmp"];
+	}
+
 	if (!format) {
 		std::cout << "Not BMP\n";
 	}
