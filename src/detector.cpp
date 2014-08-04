@@ -7,6 +7,18 @@
 void JPGDetector::detect(const std::string& image, Format& format) {
 	std::cout << "Testing for JPG\n";
 
+	//JPG is define by a very specific structure.
+	//A JPG file starts with a 12 bytes signature
+	// FF D8 FF E0 00 10 4A 46 49 46 00 01
+	//See http://en.wikipedia.org/wiki/JPEG#Syntax_and_structure
+	std::string signature = image.substr(0, 4);
+	const std::string jpgSignature = "\xff\xd8\xff\xe0";
+	//TODO: Make jpgSignature = \xff\xd8\xff\xe0\x00\x10\x4a\x46\x49\x46\x00\x01 work
+	if (signature == jpgSignature) {
+		std::cout << "JPG Signature found. Image file is JPG\n";
+		format = Image::Formats["jpeg"];
+	}
+
 	if (!format) {
 		std::cout << "Not JPG\n";
 	}
@@ -17,10 +29,11 @@ void PNGDetector::detect(const std::string& image, Format& format) {
 
 	//PNG is define by an 8 byte signature
 	// 89 50 4E 47 0D 0A 1A 0A
-	// See http://en.wikipedia.org/wiki/Portable_Network_Graphics#Technical_details
+	//See http://en.wikipedia.org/wiki/Portable_Network_Graphics#Technical_details
 	std::string signature = image.substr(0, 8);
-	if (signature == "\x89\x50\x4e\x47\x0d\x0a\x1a\x0a") {
-		std::cout << "PNG 8-Byte Signature is valid. Image file is PNG.\n";
+	const std::string pngSignature = "\x89\x50\x4e\x47\x0d\x0a\x1a\x0a";
+	if (signature == pngSignature) {
+		std::cout << "PNG Signature found. Image file is PNG.\n";
 		format = Image::Formats["png"];
 	}
 
