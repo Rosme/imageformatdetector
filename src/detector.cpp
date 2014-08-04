@@ -5,18 +5,43 @@
 #include <iostream>
 
 void JPGDetector::detect(const std::string& image, Format& format) {
-	std::cout << "Testing for JPG\n";
-
-	//JPG is define by a very specific structure.
-	//A JPG file starts with a 12 bytes signature
-	// FF D8 FF E0 00 10 4A 46 49 46 00 01
+	std::cout << "Testing for JPEG\n";
+	//Default JPEG image
+	//The default JPG image has a 2bytes header signature and a 2bytes ending signature
+	// Header Signature: FF D8
+	// Ending Signature: FF D9
 	//See http://en.wikipedia.org/wiki/JPEG#Syntax_and_structure
-	std::string signature = image.substr(0, 4);
-	const std::string jpgSignature = "\xff\xd8\xff\xe0";
-	//TODO: Make jpgSignature = \xff\xd8\xff\xe0\x00\x10\x4a\x46\x49\x46\x00\x01 work
-	if (signature == jpgSignature) {
-		std::cout << "JPG Signature found. Image file is JPG\n";
+	const std::string jpgHeaderSignature = "\xff\xd8";
+	const std::string jpgEndingSignature = "\xff\xd9";
+	std::string headerSignature = image.substr(0, 2);
+	std::string endingSignature = image.substr(image.size() - 2, 2); //Getting the last two bytes
+	if (headerSignature == jpgHeaderSignature && endingSignature == jpgEndingSignature) {
+		std::cout << "JPG Signature Found. Image file is JPEG.\n";
 		format = Image::Formats["jpeg"];
+		return;
+	}
+
+	std::cout << "Testing for JPEG/JFIF\n";
+	//If not a classic JPEG image, we'll test something else
+	//A JPEG/JFIF has a 5 bytes signature that represents JFIF with a null terminated string
+	// 4A 46 49 46 00
+	// The signature is located at the 7 byte
+	const std::string jfifSignature = "\x4a\x46\x49\x46";
+	headerSignature = image.substr(6, 4);
+	if (headerSignature == jfifSignature) {
+		std::cout << "JFIF Signature Found. Image is JPEG/JFIF.\n";
+		format = Image::Formats["jfif"];
+		return;
+	}
+
+	std::cout << "Testing short JPEG signature\n";
+	//We'll test only the short signature of a jpeg, which is the 2 first bytes.
+	//It's not guarantee it's a JPEG, but chances are high it is.
+	headerSignature = image.substr(0, 2);
+	if (headerSignature == jpgHeaderSignature) {
+		std::cout << "HEADER JPG Signature Found. High chance of this being a JPG image.\n";
+		format = Image::Formats["jpg"];
+		return;
 	}
 
 	if (!format) {
