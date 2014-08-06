@@ -24,7 +24,13 @@ void Image::loadFormats() {
 }
 
 Image::Image()
-	: Image("") {}
+	: 
+#if _MSC_VER == 1700
+	mFile(""), mDetector(nullptr)
+#else
+	Image("") 
+#endif
+	{}
 
 Image::Image(const std::string& file)
 	: mFile(file), mDetector(nullptr) {

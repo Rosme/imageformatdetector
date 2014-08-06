@@ -11,7 +11,13 @@ enum ImageFormat {
 
 struct Format {
 	Format()
-		: Format("**", "Unknown Format", ImageFormat::Unknown) {}
+		: 
+#if _MSC_VER == 1700 
+		extension("**"), name("Unknown Format"), format(ImageFormat::Unknown)
+#else 
+	Format("**", "Unknown Format", ImageFormat::Unknown) 
+#endif
+	{}
 	Format(const std::string& ext, const std::string& n, const ImageFormat f)
 		: extension(ext), name(n), format(f) {
 	}
