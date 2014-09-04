@@ -3,6 +3,7 @@
 #include "image.hpp"
 
 #include <iostream>
+#include <algorithm>
 
 void JPGDetector::detect(const std::string& image, Format& format) {
 	std::cout << "Testing for JPEG\n";

@@ -40,7 +40,8 @@ int main(int argc, char* argv[]) {
 	img.detectFormat();
 	std::cout << "\nReal Format: \n";
 	std::cout << img.realFormat();
-
+#ifdef _MSC_VER
 	std::cin.get();
+#endif
 	return 0;
 }
