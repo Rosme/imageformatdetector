@@ -6,7 +6,12 @@
 
 #include <iostream>
 
-std::unordered_map<std::string, Format> Image::Formats;
+#ifdef _MSC_VER
+	std::unordered_map<std::string, Format> Image::Formats;
+#else
+	std::map<std::string, Format> Image::Formats;
+#endif
+
 
 void Image::loadFormats() {
 	//Listing the extensions for the different iamge formats

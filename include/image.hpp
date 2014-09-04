@@ -1,10 +1,14 @@
 #pragma once
 
 #include <string>
-#include <unordered_map>
 #include <memory>
 #include <functional>
 #include <vector>
+#ifdef _MSC_VER
+#include <unordered_map>
+#else
+#include <map>
+#endif
 
 #include "format.hpp"
 #include "detector.hpp"
@@ -13,7 +17,13 @@ typedef std::unique_ptr<Detector> DetectorPtr;
 
 class Image {
 public:
-	static std::unordered_map<std::string, Format> Formats;
+	static
+#ifdef _MSC_VER	
+	std::unordered_map<std::string, Format>
+#else	
+	std::map<std::string, Format>
+#endif	
+	Formats;
 	static void loadFormats();
 
 public:
@@ -38,7 +48,12 @@ private:
 	std::string mContent;
 	DetectorPtr mDetector;
 
-	std::unordered_map<ImageFormat, std::function<DetectorPtr()>> mDetectors;
+#ifdef _MSC_VER
+	std::unordered_map<ImageFormat, std::function<DetectorPtr()>> 
+#else
+	std::map<ImageFormat, std::function<DetectorPtr()>>
+#endif
+	mDetectors;
 };
 
 template<class T>
