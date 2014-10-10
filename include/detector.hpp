@@ -19,3 +19,7 @@ class PNGDetector : public Detector {
 class BMPDetector : public Detector {
 	void detect(const std::string& image, Format& format);
 };
+
+class GIFDetector : public Detector {
+	void detect(const std::string& image, Format& format);
+};

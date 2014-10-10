@@ -6,6 +6,7 @@ enum ImageFormat {
 	JPG,
 	PNG,
 	BMP,
+	GIF,
 	Unknown
 };
 

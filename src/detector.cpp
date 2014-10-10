@@ -102,3 +102,31 @@ void BMPDetector::detect(const std::string& image, Format& format) {
 		std::cout << "Not BMP\n";
 	}
 }
+
+void GIFDetector::detect(const std::string& image, Format& format) {
+	std::cout << "Testing for GIF\n";
+
+	//GIF is defined by an 6 byte signature
+	// GIF87a : 47 49 46 38 37 61
+	// GIF89a : 47 49 46 38 39 61
+	//See http://en.wikipedia.org/wiki/List_of_file_signatures
+	std::string signature = image.substr(0, 6);
+	const std::string gif87Signature = "\x47\x49\x46\x38\x37\x61";
+	if(signature == gif87Signature) {
+		std::cout << "GIF Signature found for ISO gif87a. Image file is GIF.\n";
+		format = Image::Formats["gif"];
+	} else {
+		std::cout << "Not ISO gif87a. Might be gif for ISO gif89a. Let's test it.\n";
+	}
+
+	const std::string gif89Signature = "\x47\x49\x46\x38\x39\x61";
+	if(signature == gif89Signature) {
+		std::cout << "GIF Signature found for ISO gif89a. Image file is GIF.\n";
+		format = Image::Formats["gif"];
+	}
+
+	if(!format) {
+		std::cout << "Not GIF\n";
+	}
+
+}

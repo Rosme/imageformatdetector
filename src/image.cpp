@@ -26,6 +26,8 @@ void Image::loadFormats() {
 	Formats["jif"] = Format("jif", "JPEG - JPEG File Interchange Format", ImageFormat::JPG);
 	Formats["jfif"] = Format("jfif", "JPEG - JPEG File Interchange Format", ImageFormat::JPG);
 	Formats["jfi"] = Format("jfi", "JPEG - JPEG File Interchange Format", ImageFormat::JPG);
+	//GIF
+	Formats["gif"] = Format("gif", "GIF - Graphics Interchange Format", ImageFormat::GIF);
 }
 
 Image::Image()
@@ -43,6 +45,7 @@ Image::Image(const std::string& file)
 	registerFormat<JPGDetector>(ImageFormat::JPG);
 	registerFormat<PNGDetector>(ImageFormat::PNG);
 	registerFormat<BMPDetector>(ImageFormat::BMP);
+	registerFormat<GIFDetector>(ImageFormat::GIF);
 
 	//Trying to find format based on extension
 	std::string fileExtension = mFile.substr(mFile.rfind('.')+1);
