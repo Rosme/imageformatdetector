@@ -22,7 +22,15 @@ int main(int argc, char* argv[]) {
 		std::cin.get();
 		return 0;
 	}
-	std::string filepath = argv[1];
+	std::string arg = argv[1];
+	std::string filepath;
+	if(arg == "-i") {
+		std::cout << "Interactive Mode\n";
+		std::cout << "Indicates path to file: ";
+		std::getline(std::cin, filepath);
+	} else {
+		filepath = argv[1];
+	}
 	for (auto& c : filepath) {
 		if (c == '\\')
 			c = '/';
