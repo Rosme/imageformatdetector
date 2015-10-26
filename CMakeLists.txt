@@ -22,7 +22,7 @@
 
 CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
 
-SET(PROJECT_NAME "ImageTypeDetector")
+SET(PROJECT_NAME "ImageFormatDetector")
 PROJECT(${PROJECT_NAME})
 
 IF(UNIX)
@@ -37,6 +37,8 @@ IF(UNIX)
 		MESSAGE(STATUS "The Compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use one that supports C++11.")
 	ENDIF()
 ENDIF()
+
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
 # Definitions and includes
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
