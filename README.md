@@ -10,7 +10,7 @@ The IFD is a simple C++ program that uses magic number and extension to figure o
 ## Building
 
 ```
-cmake CMakeList.txt && make
+cmake && make
 ```
 
 The executable should be in the bin directory
