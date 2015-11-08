@@ -40,8 +40,10 @@ int main(int argc, char* argv[]) {
 	//Loading format
 	Image::loadFormats();
 	if (argc == 1) {
-		std::cout << "No file given";
-		std::cin.get();
+		std::cout << "No file given\n";
+#ifdef _MSC_VER
+        std::cin.get();
+#endif
 		return 0;
 	}
 	std::string arg = argv[1];
