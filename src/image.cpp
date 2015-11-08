@@ -73,8 +73,9 @@ Image::Image(const std::string& file)
 	std::string fileExtension = mFile.substr(mFile.rfind('.')+1);
 	mNameBasedFormat.extension = fileExtension;
 	auto it = Formats.find(fileExtension);
-	if (it != Formats.end())
+	if (it != Formats.end()) {
 		mExpectedFormat = it->second;
+	}
 }
 
 void Image::load(const std::string& file) {
@@ -110,7 +111,7 @@ void Image::detectFormat() {
 	ImageFormat imgFormat = Formats[mExpectedFormat.extension].format;
 	mDetector = mDetectors[imgFormat]();
 	assert(mDetector != nullptr);
-	mDetector->detect(mContent, mRealFormat);
+	mRealFormat = mDetector->detect(mContent)	;
 
 	//Verifying if we found the format
 	//If so, it means the extension was true
@@ -133,7 +134,7 @@ void Image::detectFormat() {
 		//We'll take the next detector and try it
 		mDetector = it.second();
 		assert(mDetector != nullptr);
-		mDetector->detect(mContent, mRealFormat);
+		mRealFormat = mDetector->detect(mContent);
 		//Verifying if we found a format
 		if (mRealFormat)
 			return;

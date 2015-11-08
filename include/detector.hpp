@@ -27,21 +27,21 @@
 struct Format;
 
 struct Detector {
-	virtual void detect(const std::string& image, Format& format) = 0;
+	virtual Format detect(const std::string& image) = 0;
 };
 
 class JPGDetector : public Detector {
-	void detect(const std::string& image, Format& format);
+	Format detect(const std::string& image);
 };
 
 class PNGDetector : public Detector {
-	void detect(const std::string& image, Format& format);
+	Format detect(const std::string& image);
 };
 
 class BMPDetector : public Detector {
-	void detect(const std::string& image, Format& format);
+	Format detect(const std::string& image);
 };
 
 class GIFDetector : public Detector {
-	void detect(const std::string& image, Format& format);
+	Format detect(const std::string& image);
 };

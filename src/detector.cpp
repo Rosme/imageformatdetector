@@ -27,7 +27,7 @@
 #include <iostream>
 #include <algorithm>
 
-void JPGDetector::detect(const std::string& image, Format& format) {
+Format JPGDetector::detect(const std::string& image) {
 	std::cout << "Testing for JPEG\n";
 	//Default JPEG image
 	//The default JPG image has a 2bytes header signature and a 2bytes ending signature
@@ -40,8 +40,7 @@ void JPGDetector::detect(const std::string& image, Format& format) {
 	std::string endingSignature = image.substr(image.size() - 2, 2); //Getting the last two bytes
 	if (headerSignature == jpgHeaderSignature && endingSignature == jpgEndingSignature) {
 		std::cout << "JPG Signature Found. Image file is JPEG.\n";
-		format = Image::Formats["jpeg"];
-		return;
+		return Image::Formats["jpeg"];
 	}
 
 	std::cout << "Testing for JPEG/JFIF\n";
@@ -53,8 +52,7 @@ void JPGDetector::detect(const std::string& image, Format& format) {
 	headerSignature = image.substr(6, 4);
 	if (headerSignature == jfifSignature) {
 		std::cout << "JFIF Signature Found. Image is JPEG/JFIF.\n";
-		format = Image::Formats["jfif"];
-		return;
+		return Image::Formats["jfif"];
 	}
 
 	std::cout << "Testing short JPEG signature\n";
@@ -63,16 +61,14 @@ void JPGDetector::detect(const std::string& image, Format& format) {
 	headerSignature = image.substr(0, 2);
 	if (headerSignature == jpgHeaderSignature) {
 		std::cout << "HEADER JPG Signature Found. High chance of this being a JPG image.\n";
-		format = Image::Formats["jpg"];
-		return;
+		return Image::Formats["jpg"];
 	}
 
-	if (!format) {
-		std::cout << "Not JPG\n";
-	}
+	std::cout << "Not JPG\n";
+	return Format();
 }
 
-void PNGDetector::detect(const std::string& image, Format& format) {
+Format PNGDetector::detect(const std::string& image) {
 	std::cout << "Testing for PNG\n";
 
 	//PNG is define by an 8 byte signature
@@ -82,15 +78,14 @@ void PNGDetector::detect(const std::string& image, Format& format) {
 	const std::string pngSignature = "\x89\x50\x4e\x47\x0d\x0a\x1a\x0a";
 	if (signature == pngSignature) {
 		std::cout << "PNG Signature found. Image file is PNG.\n";
-		format = Image::Formats["png"];
+		return Image::Formats["png"];
 	}
 
-	if (!format) {
-		std::cout << "Not PNG\n";
-	}
+	std::cout << "Not PNG\n";
+	return Format();
 }
 
-void BMPDetector::detect(const std::string& image, Format& format) {
+Format BMPDetector::detect(const std::string& image) {
 	std::cout << "Testing for BMP\n";
 
 	//BMP is define by a 14 Byte header
@@ -117,15 +112,14 @@ void BMPDetector::detect(const std::string& image, Format& format) {
 	const auto it = std::find(std::begin(bmpSignatures), std::end(bmpSignatures), signature);
 	if (it != std::end(bmpSignatures)) {
 		std::cout << "BMP Signature Found: " << *it << ". Image file is BMP.\n";
-		format = Image::Formats["bmp"];
+		return Image::Formats["bmp"];
 	}
 
-	if (!format) {
-		std::cout << "Not BMP\n";
-	}
+	std::cout << "Not BMP\n";
+	return Format();
 }
 
-void GIFDetector::detect(const std::string& image, Format& format) {
+Format GIFDetector::detect(const std::string& image) {
 	std::cout << "Testing for GIF\n";
 
 	//GIF is defined by an 6 byte signature
@@ -136,7 +130,7 @@ void GIFDetector::detect(const std::string& image, Format& format) {
 	const std::string gif87Signature = "\x47\x49\x46\x38\x37\x61";
 	if(signature == gif87Signature) {
 		std::cout << "GIF Signature found for ISO gif87a. Image file is GIF.\n";
-		format = Image::Formats["gif"];
+		return Image::Formats["gif"];
 	} else {
 		std::cout << "Not ISO gif87a. Might be gif for ISO gif89a. Let's test it.\n";
 	}
@@ -144,11 +138,9 @@ void GIFDetector::detect(const std::string& image, Format& format) {
 	const std::string gif89Signature = "\x47\x49\x46\x38\x39\x61";
 	if(signature == gif89Signature) {
 		std::cout << "GIF Signature found for ISO gif89a. Image file is GIF.\n";
-		format = Image::Formats["gif"];
+		return Image::Formats["gif"];
 	}
 
-	if(!format) {
-		std::cout << "Not GIF\n";
-	}
-
+	std::cout << "Not GIF\n";
+	return Format();
 }
