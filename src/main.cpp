@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
 	Image img(filepath);
 	img.load();
 
-	std::cout << "File Type Detector\n";
+	std::cout << "File Format Detector\n";
 	std::cout << "File loaded: " + img.filename() + "\n\n";
 	std::cout << "Format Based Name: \n";
 	std::cout << img.nameBasedFormat();
