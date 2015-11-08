@@ -28,6 +28,10 @@
 
 #include <iostream>
 
+#ifndef _MSC_VER
+#include <wordexp.h>
+#endif
+
 #ifdef _MSC_VER
 	std::unordered_map<std::string, Format> Image::Formats;
 #else
@@ -80,7 +84,7 @@ Image::Image(const std::string& file)
 
 void Image::load(const std::string& file) {
 	//Reading the file and loading into memory
-	std::ifstream ifs(mFile, std::ios::binary);
+	std::ifstream ifs(expandPath(mFile), std::ios::binary);
 	assert(ifs.is_open());
 
 	ifs.seekg(0, ifs.end);
@@ -144,4 +148,16 @@ void Image::detectFormat() {
 
 const std::string& Image::filename() const {
 	return mFile;
+}
+
+const std::string Image::expandPath(const std::string& file) {
+#ifdef _MSC_VER
+	return file;
+#else
+	wordexp_t result;
+	wordexp(file.c_str(), &result, 0);
+	std::string expandedPath(result.we_wordv[0]);
+	wordfree(&result);
+	return expandedPath;
+#endif
 }

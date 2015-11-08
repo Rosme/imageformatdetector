@@ -58,6 +58,7 @@ public:
 	const Format& nameBasedFormat() const;
 	void detectFormat();
 	const std::string& filename() const;
+	const std::string expandPath(const std::string& file);
 
 	template<class T>
 	void registerFormat(ImageFormat format);
